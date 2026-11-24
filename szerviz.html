@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Szerviz és javításkövetés | ReBoot Tech &amp; Trade</title>
+<meta name="description" content="Felújított PC-k, alkatrészek, szerviz és régi gépek felvásárlása – ReBoot Tech &amp; Trade.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Pixelify+Sans:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/modern.css">
+</head>
+<body>
+<a class="skip" href="#top">Ugrás a tartalomhoz</a>
+<div class="grain" aria-hidden="true"></div>
+<canvas id="traces" aria-hidden="true"></canvas>
+<div class="page">
+  <header class="site-head">
+    <div class="wrap head-row">
+      <a class="brand" href="index.html" aria-label="ReBoot Tech &amp; Trade, oldal teteje">
+        <span class="mark" data-gear></span>
+        <span class="brand-name">ReBoot<small>Tech &amp; Trade</small></span>
+      </a>
+      <nav class="nav" aria-label="Főmenü"><a href="szerviz.html" aria-current="page">Szerviz</a><a href="bolt.html">Bolt</a><a href="alkatreszek.html">Alkatrészek</a><a href="felvasarlas.html">Felvásárlás</a><a href="kapcsolat.html">Kapcsolat</a></nav>
+      <div class="head-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Világos és sötét téma váltása">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        </button>
+        <button class="icon-btn" id="cartBtn" type="button" aria-label="Kosár megnyitása" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h3l3 12h11l2-8H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+          <span class="badge-count" id="cartCount" aria-live="polite" hidden>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="top">
+    <section class="sec" id="szerviz" aria-labelledby="szerv-h">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow">Szerviz</p>
+          <h2 id="szerv-h">Javítjuk, ami elromlott</h2>
+          <p class="lede">Hozd a saját gépedet, nem kell nálunk vásároltnak lennie. Megnézzük, megmondjuk az árat, és csak akkor nyúlunk hozzá, ha igent mondasz. Jelöld be, mi a baj, és kapsz egy becslést.</p>
+        </header>
+
+        <div class="calc">
+          <form class="calc-in" id="svcForm">
+            <div class="field">
+              <span class="group-label" id="svcTypeLabel">Mit hozol?</span>
+              <div class="chips" id="svcTypes" role="group" aria-labelledby="svcTypeLabel"></div>
+            </div>
+            <div class="range-row">
+              <div class="top"><label class="group-label" for="svcAge">Hány éves?</label><output id="svcAgeOut" for="svcAge">6 év</output></div>
+              <input id="svcAge" type="range" min="0" max="40" step="1" value="6">
+              <p class="hint" id="svcAgeHint"></p>
+            </div>
+            <div class="field">
+              <span class="group-label" id="svcListLabel">Mi a baj? Jelöld be, ami igaz.</span>
+              <div class="svc-list" id="svcList" role="group" aria-labelledby="svcListLabel"></div>
+            </div>
+          </form>
+
+          <div class="calc-out">
+            <div>
+              <div class="out-label">Becsült javítási költség</div>
+              <div class="out-value sm" id="svcCost">–</div>
+            </div>
+            <dl class="out-rows">
+              <div><dt>Átfutás</dt><dd id="svcDays">–</dd></div>
+              <div><dt>Diagnosztika</dt><dd id="svcDiag">–</dd></div>
+            </dl>
+            <div class="advice" id="svcAdvice"></div>
+            <p class="fine" id="svcNote"></p>
+            <button class="btn primary" type="button" id="svcAsk">Javítást kérek</button>
+          </div>
+        </div>
+
+        <form class="req" id="svcReq" novalidate>
+          <div class="req-head">
+            <h3>Írd le részletesebben</h3>
+            <p>Minél pontosabban leírod, mi a baj, annál pontosabb árat tudunk mondani. A fent kijelölt hibákat és a becslést magunktól hozzáfűzzük a levélhez.</p>
+          </div>
+          <div class="req-grid">
+            <div class="field req-wide">
+              <label for="svcDesc">A hiba részletei <span class="req-flag">(kötelező)</span></label>
+              <textarea class="input" id="svcDesc" maxlength="1500" required aria-required="true" aria-describedby="svcDescErr" placeholder="Írj legalább egy pontot: mi történik a géppel, mióta, és mit próbáltál már? Például: bekapcsoláskor háromszor sípol, és nem ad képet."></textarea>
+              <div class="req-meta"><span class="err" id="svcDescErr" role="alert"></span><span class="count" id="svcDescCount">0 / 1500</span></div>
+            </div>
+            <div class="field">
+              <label for="svcName">Neved <span class="req-flag">(kötelező)</span></label>
+              <input class="input" id="svcName" type="text" autocomplete="name" required aria-required="true" aria-describedby="svcNameErr">
+              <span class="err" id="svcNameErr" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="svcMail">E-mail <span class="req-flag">(kötelező)</span></label>
+              <input class="input" id="svcMail" type="email" autocomplete="email" required aria-required="true" aria-describedby="svcMailErr">
+              <span class="err" id="svcMailErr" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="svcPhone">Telefon <span class="req-flag">(nem kötelező)</span></label>
+              <input class="input" id="svcPhone" type="tel" autocomplete="tel">
+              <span class="err"></span>
+            </div>
+          </div>
+          <div class="req-attach" id="svcAttach"></div>
+          <div class="req-actions">
+            <button class="btn primary" type="submit" id="svcSend">Küldés</button>
+            <span class="fine">Küldéskor megnyitjuk a levelezőprogramodat a kitöltött levéllel, a címzett a ReBoot szerviz.</span>
+          </div>
+          <div class="composed" id="svcSent" hidden>
+            <strong>A levél összeállítva.</strong>
+            <p class="fine">Megpróbáltuk megnyitni a levelezőprogramodat. Az oldal nem látja, hogy a levél elment-e, ezért nézd meg ott, és nyomd meg a küldést. Ha nem nyílt meg semmi, másold ki a levelet, és küldd el kézzel erre a címre: <span class="mono sel">joannistzelepakis@gmail.com</span></p>
+            <p class="fine" id="svcTrunc" hidden>A levél hosszú, ezért a levelezőbe a rövidített változat került. A teljes szöveget másold ki innen.</p>
+            <div class="resv" id="svcSentBody"></div>
+            <div class="req-actions">
+              <a class="btn small" id="svcOpenMail" href="#svcReq" target="_blank" rel="noopener">Megnyitás a levelezőben</a>
+              <button class="btn small" type="button" id="svcCopyMail">Levél másolása</button>
+              <button class="btn small" type="button" id="svcCopyAddr">Cím másolása</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="tk">
+          <div class="tk-side">
+            <h3>Követd a javításod</h3>
+            <p>Az átvételi lapon szereplő kóddal bármikor megnézheted, hol tart a géped.</p>
+            <form class="tk-form" id="tkForm">
+              <div class="field">
+                <label for="tkCode">Javítási kód</label>
+                <div class="tk-in">
+                  <input class="input mono" id="tkCode" type="text" value="RB-2041" autocomplete="off" spellcheck="false" aria-describedby="tkErr">
+                  <button class="btn primary" type="submit">Keresés</button>
+                </div>
+                <span class="err" id="tkErr"></span>
+              </div>
+            </form>
+            <p class="fine">Példakódok a bemutatóhoz:</p>
+            <div class="chips" id="tkChips"></div>
+          </div>
+          <div class="tk-main" id="tkOut" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+<section class="sec" id="folyamat" aria-labelledby="fol-h">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow">Három lépés</p>
+          <h2 id="fol-h">Hogyan működik?</h2>
+          <p class="lede">Ugyanígy megy, ha javíttatnál, eladnál vagy alkatrészt keresel.</p>
+        </header>
+        <ol class="steps">
+          <li><span class="step-pad" aria-hidden="true">1</span><h3>Hozd el</h3><p>Behozod a gépet, vagy előre megírod, mi a baj. Csomagban is fogadjuk. Átvételi lapot és javítási kódot kapsz.</p></li>
+          <li><span class="step-pad" aria-hidden="true">2</span><h3>Megnézzük</h3><p>Lefuttatjuk a diagnosztikát, és megmondjuk, mi a hiba, mennyibe kerül a javítás, és mennyit ér a gép.</p></li>
+          <li><span class="step-pad" aria-hidden="true">3</span><h3>Te döntesz</h3><p>Megjavítjuk, beszámítjuk, vagy alkatrésznek megvesszük. Csak az indul el, amire igent mondtál.</p></li>
+        </ol>
+
+        <div class="post">
+          <div>
+            <h3>A 12 pontos ReBoot-diagnosztika</h3>
+            <p>Minden gép ezen megy végig, mielőtt a polcra kerül, és minden javításnál ezt kapod írásban. Amelyik darab megbukik, alkatrésznek megy.</p>
+          </div>
+          <ul class="checks">
+            <li>Bekapcsolás, hideg indítás</li>
+            <li>Memória, 4 menet</li>
+            <li>Tárhely SMART-állapot</li>
+            <li>Akkumulátor kapacitás</li>
+            <li>Kijelző, holt pixelek</li>
+            <li>Billentyűzet, minden gomb</li>
+            <li>Portok és csatlakozók</li>
+            <li>Hűtés, 30 perces terhelés</li>
+            <li>Hálózat, Wi-Fi és LAN</li>
+            <li>Hang és kamera</li>
+            <li>Tisztítás, szárítás, új hőpaszta</li>
+            <li>Tiszta, friss rendszer</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="wrap foot-row">
+      <div class="brand" style="margin:0">
+        <span class="mark" data-gear aria-hidden="true"></span>
+        <span class="brand-name">ReBoot<small>one man’s trash is another man’s treasure</small></span>
+      </div>
+      <p class="small">A régi technika nem hulladék. Megjavítjuk, újra eladjuk, vagy alkatrésznek használjuk fel. Bemutató oldal: a kosár és az űrlapok nem küldenek megrendelést.</p>
+      <nav class="foot-links" aria-label="Lábléc">
+        <a href="szerviz.html">Szerviz</a><a href="bolt.html">Bolt</a><a href="alkatreszek.html">Alkatrészek</a><a href="felvasarlas.html">Felvásárlás</a><a href="szerviz.html#folyamat">Folyamat</a><a href="kapcsolat.html#gyik">GYIK</a><a href="kapcsolat.html#kapcsolat">Kapcsolat</a>
+      </nav>
+    </div>
+  </footer>
+</div>
+<div class="backdrop" id="backdrop" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" inert>
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Kosár</h2>
+    <button class="icon-btn" id="closeCart" type="button" aria-label="Kosár bezárása">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot"></div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/boot.js"></script>
+</body>
+</html>

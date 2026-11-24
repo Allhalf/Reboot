@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Alkatrészek | ReBoot Tech &amp; Trade</title>
+<meta name="description" content="Felújított PC-k, alkatrészek, szerviz és régi gépek felvásárlása – ReBoot Tech &amp; Trade.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Pixelify+Sans:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/modern.css">
+</head>
+<body>
+<a class="skip" href="#top">Ugrás a tartalomhoz</a>
+<div class="grain" aria-hidden="true"></div>
+<canvas id="traces" aria-hidden="true"></canvas>
+<div class="page">
+  <header class="site-head">
+    <div class="wrap head-row">
+      <a class="brand" href="index.html" aria-label="ReBoot Tech &amp; Trade, oldal teteje">
+        <span class="mark" data-gear></span>
+        <span class="brand-name">ReBoot<small>Tech &amp; Trade</small></span>
+      </a>
+      <nav class="nav" aria-label="Főmenü"><a href="szerviz.html">Szerviz</a><a href="bolt.html">Bolt</a><a href="alkatreszek.html" aria-current="page">Alkatrészek</a><a href="felvasarlas.html">Felvásárlás</a><a href="kapcsolat.html">Kapcsolat</a></nav>
+      <div class="head-actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Világos és sötét téma váltása">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        </button>
+        <button class="icon-btn" id="cartBtn" type="button" aria-label="Kosár megnyitása" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h3l3 12h11l2-8H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/></svg>
+          <span class="badge-count" id="cartCount" aria-live="polite" hidden>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="top">
+    <section class="sec" id="alkatreszek" aria-labelledby="alk-h">
+      <div class="wrap">
+        <header class="sec-head">
+          <p class="eyebrow"><span id="partCount">33 alkatrész raktáron</span></p>
+          <h2 id="alk-h">Alkatrészek</h2>
+          <p class="lede">Tesztelt alkatrészek a mai gépekhez és a negyven évvel ezelőttiekhez. A szervizben ugyanezeket építjük be, ugyanazzal a garanciával.</p>
+        </header>
+
+        <div class="toolbar">
+          <div class="toolbar-row">
+            <div class="field search">
+              <label for="partQ">Keresés</label>
+              <input class="input" id="partQ" type="search" placeholder="pl. DDR3, LGA1150, AGP, 65 W" autocomplete="off">
+            </div>
+            <div class="field sortbox">
+              <label for="partSort">Rendezés</label>
+              <select class="select" id="partSort">
+                <option value="def">Típus szerint</option>
+                <option value="pa">Ár: növekvő</option>
+                <option value="pd">Ár: csökkenő</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div class="group-label" id="partCatLabel" style="margin-bottom:8px">Alkatrész típusa</div>
+            <div class="chips" id="partChips" role="group" aria-labelledby="partCatLabel"></div>
+          </div>
+          <p class="legend"><span><b>A</b> új vagy alig használt</span><span><b>B</b> használt, tesztelt</span><span><b>C</b> kopott, de működik</span></p>
+        </div>
+
+        <div class="plist" id="partList" aria-live="polite"></div>
+
+        <div class="wanted">
+          <div>
+            <h3>Nem találod, amit keresel?</h3>
+            <p>Írd meg a gép típusát vagy az alkatrész jelölését, és megkeressük. Hibás gépet alkatrésznek is felvásárolunk.</p>
+          </div>
+          <div class="wanted-cta">
+            <button class="btn primary" type="button" id="partAsk">Alkatrészt keresek</button>
+            <a class="btn" href="felvasarlas.html">Alkatrésznek eladom</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="wrap foot-row">
+      <div class="brand" style="margin:0">
+        <span class="mark" data-gear aria-hidden="true"></span>
+        <span class="brand-name">ReBoot<small>one man’s trash is another man’s treasure</small></span>
+      </div>
+      <p class="small">A régi technika nem hulladék. Megjavítjuk, újra eladjuk, vagy alkatrésznek használjuk fel. Bemutató oldal: a kosár és az űrlapok nem küldenek megrendelést.</p>
+      <nav class="foot-links" aria-label="Lábléc">
+        <a href="szerviz.html">Szerviz</a><a href="bolt.html">Bolt</a><a href="alkatreszek.html">Alkatrészek</a><a href="felvasarlas.html">Felvásárlás</a><a href="szerviz.html#folyamat">Folyamat</a><a href="kapcsolat.html#gyik">GYIK</a><a href="kapcsolat.html#kapcsolat">Kapcsolat</a>
+      </nav>
+    </div>
+  </footer>
+</div>
+<div class="backdrop" id="backdrop" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" inert>
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Kosár</h2>
+    <button class="icon-btn" id="closeCart" type="button" aria-label="Kosár bezárása">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot"></div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/boot.js" data-gallery></script>
+</body>
+</html>
